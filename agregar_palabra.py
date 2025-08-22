@@ -14,6 +14,10 @@ def agregarPalabra():
     nuevaDescripcion = descripcion.get("1.0", "end")
     resultad2.configure(text=f"El valor es {nuevaDescripcion}")
     resultado.configure(text=f"El valor es {nuevaPalabra}")
+    listaDePlabras.append(nuevaPalabra)
+    descripciones.append(nuevaDescripcion)
+    print(listaDePlabras)
+    print (descripciones)
 
 #---------------------------------
 baseDeDatos=connect("palabras.db")
