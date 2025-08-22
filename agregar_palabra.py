@@ -10,14 +10,22 @@ descripciones=[]
 #---------------------------------------------
 # funcion para agregar la palabra
 def agregarPalabra():
+    #se almacena el valor de las varibles en las cajas
     nuevaPalabra = str(nombrePalabra.get())
     nuevaDescripcion = descripcion.get("1.0", "end")
+    #se reconfigura la etiqueta de cada caja
     resultad2.configure(text=f"El valor es {nuevaDescripcion}")
     resultado.configure(text=f"El valor es {nuevaPalabra}")
+    #agregaLas palabras a las listas cada vez que le toca el boton de agregar
     listaDePlabras.append(nuevaPalabra)
     descripciones.append(nuevaDescripcion)
     print(listaDePlabras)
     print (descripciones)
+    cr.execute('''
+        INSERT INTO palabras (palabra, descripcion)
+        VALUES (?,?)''', (nuevaPalabra, nuevaDescripcion))
+    baseDeDatos.commit()
+
 
 #---------------------------------
 baseDeDatos=connect("palabras.db")
