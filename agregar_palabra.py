@@ -1,5 +1,5 @@
 from sqlite3 import * 
-from tkinter import messagebox
+from tkinter import messagebox, Button
 from tkinter import *
 
 #----------------------------------------------
@@ -8,7 +8,26 @@ listaDePlabras=[]
 #lista para almacenar las descripciones
 descripciones=[]
 #---------------------------------------------
+# funcion para agregar la palabra
+def agregarPalabra():
+    #se almacena el valor de las varibles en las cajas
+    nuevaPalabra = str(nombrePalabra.get())
+    nuevaDescripcion = descripcion.get("1.0", "end")
+    #se reconfigura la etiqueta de cada caja
+    resultad2.configure(text=f"El valor es {nuevaDescripcion}")
+    resultado.configure(text=f"El valor es {nuevaPalabra}")
+    #agregaLas palabras a las listas cada vez que le toca el boton de agregar
+    listaDePlabras.append(nuevaPalabra)
+    descripciones.append(nuevaDescripcion)
+    print(listaDePlabras)
+    print (descripciones)
+    cr.execute('''
+        INSERT INTO palabras (palabra, descripcion)
+        VALUES (?,?)''', (nuevaPalabra, nuevaDescripcion))
+    baseDeDatos.commit()
 
+
+#---------------------------------
 baseDeDatos=connect("palabras.db")
 #se crea el cursor
 cr=baseDeDatos.cursor()
@@ -18,7 +37,7 @@ app=Tk()
 app.title("Agregar Palabra")
 
 #se crea el tamaño de la ventana
-app.geometry("400x300")
+app.geometry("400x400")
 app.resizable(False,False)
 #----------------------------------------------
 #etiqueta para dar la bienvenida
@@ -32,9 +51,10 @@ nombrePalabra.grid(row=1, column=2, sticky='wens', columnspan=4)
 #etiqueta para la descripcion
 etiqueta3=Label(app, text='Ingrese la descripcion: ', bg='lightgreen', fg='blue', font=(20))
 etiqueta3.grid(row=2, column=0, sticky='wens', columnspan=2)
-descripcio=Text(app, height=5, width=30)
-descripcio.grid(row=2, column=2, sticky='wens', columnspan=4)
+descripcion=Text(app, height=5, width=30)
+descripcion.grid(row=2, column=2, sticky='wens', columnspan=3, pady=5, padx=3)
 #------------------------------------------------
+<<<<<<< HEAD
 #funcion para obtener el valor las  y la descripcion
 while nombrePalabra.get() == "" or descripcio.get("1.0",END) == "":
     messagebox.showwarning("Advertencia", "Por favor, complete todos los campos.")
@@ -45,5 +65,22 @@ else:
     messagebox.showinfo("Éxito", "Palabra agregada correctamente.")
 
 
+=======
+#varibles para almacenar las palabras y la descripcion
+
+
+resultado=Label(app, text="El valor es: ")
+
+resultad2=Label(app, text="El valor es: ")
+
+resultado.grid(row=3, column=0)
+resultad2.grid(row=4, column=0, columnspan=3)
+
+#------------------------------------------------------
+#boton de agregar
+resul=Button(app, text="Agregar", command=agregarPalabra)
+resul.grid(row=5, column=0)
+
+>>>>>>> 2a4503ae47e41c119bf37252efcf8efb7c16a0a8
 
 app.mainloop()
