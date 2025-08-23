@@ -35,6 +35,15 @@ etiqueta3.grid(row=2, column=0, sticky='wens', columnspan=2)
 descripcio=Text(app, height=5, width=30)
 descripcio.grid(row=2, column=2, sticky='wens', columnspan=4)
 #------------------------------------------------
-#funcion para agregar las palabras
+#funcion para obtener el valor las  y la descripcion
+while nombrePalabra.get() == "" or descripcio.get("1.0",END) == "":
+    messagebox.showwarning("Advertencia", "Por favor, complete todos los campos.")
+    break
+else:
+    listaDePlabras.append(nombrePalabra.get())
+    descripciones.append(descripcio.get("1.0",END))
+    messagebox.showinfo("Éxito", "Palabra agregada correctamente.")
+
+
 
 app.mainloop()
