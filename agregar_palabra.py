@@ -54,18 +54,6 @@ etiqueta3.grid(row=2, column=0, sticky='wens', columnspan=2)
 descripcion=Text(app, height=5, width=30)
 descripcion.grid(row=2, column=2, sticky='wens', columnspan=3, pady=5, padx=3)
 #------------------------------------------------
-<<<<<<< HEAD
-#funcion para obtener el valor las  y la descripcion
-while nombrePalabra.get() == "" or descripcio.get("1.0",END) == "":
-    messagebox.showwarning("Advertencia", "Por favor, complete todos los campos.")
-    break
-else:
-    listaDePlabras.append(nombrePalabra.get())
-    descripciones.append(descripcio.get("1.0",END))
-    messagebox.showinfo("Éxito", "Palabra agregada correctamente.")
-
-
-=======
 #varibles para almacenar las palabras y la descripcion
 
 
@@ -81,6 +69,5 @@ resultad2.grid(row=4, column=0, columnspan=3)
 resul=Button(app, text="Agregar", command=agregarPalabra)
 resul.grid(row=5, column=0)
 
->>>>>>> 2a4503ae47e41c119bf37252efcf8efb7c16a0a8
 
 app.mainloop()
