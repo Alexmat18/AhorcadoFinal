@@ -35,8 +35,8 @@ def agregarPalabra():
     nuevaPalabra = str(nombrePalabra.get())
     nuevaDescripcion = descripcion.get("1.0", "end")
     #se reconfigura la etiqueta de cada caja
-    resultad2.configure(text=f"La palabra es {nuevaDescripcion}")
-    resultado.configure(text=f"Descripcion: {nuevaPalabra}")
+    resultad2.configure(text=f"La palabra es {nuevaPalabra}")
+    resultado.configure(text=f"Descripcion: {nuevaDescripcion}")
     cr.execute('''
         INSERT INTO palabras (palabra, descripcion)
         VALUES (?,?)''', (nuevaPalabra, nuevaDescripcion))
