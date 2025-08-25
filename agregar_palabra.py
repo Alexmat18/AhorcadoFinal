@@ -2,14 +2,13 @@ from sqlite3 import *
 from tkinter import messagebox
 from tkinter import *
 from tkinter import ttk #libreria para trabajar con tablas
-
 #----------------------------------------------
 #funcion para ver las palabras de la base de datos
 def verPalabras():
     # Crear ventana emergente
     ventanaTabla = Toplevel(app)
     ventanaTabla.title("Palabras registradas")
-    ventanaTabla.geometry("600x300")
+    #ventanaTabla.geometry("600x300")
 
     # Crear tabla Treeview
     tabla = ttk.Treeview(ventanaTabla, columns=("ID","Palabra", "Descripcion"), show="headings")
@@ -36,13 +35,11 @@ def agregarPalabra():
     nuevaDescripcion = descripcion.get("1.0", "end")
     #se reconfigura la etiqueta de cada caja
     resultad2.configure(text=f"La palabra es {nuevaPalabra}")
-    resultado.configure(text=f"Descripcion: {nuevaDescripcion}")
+    resultado.configure(text=f"Descripcion: {nuevaDescripcion }")
     cr.execute('''
         INSERT INTO palabras (palabra, descripcion)
         VALUES (?,?)''', (nuevaPalabra, nuevaDescripcion))
     baseDeDatos.commit()
-
-
 #---------------------------------
 baseDeDatos=connect("palabras.db")
 #se crea el cursor
