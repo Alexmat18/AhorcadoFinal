@@ -27,6 +27,10 @@ def verPalabras():
     palabras = cr.fetchall()
     for palabra in palabras:
         tabla.insert("", "end", values=palabra)
+#-----------------------------------------------------------------------------------------------------------------
+#funcion para eliminar las palabras en base al ID
+def eliminarPalabras():
+
 #---------------------------------------------
 # funcion para agregar la palabra
 def agregarPalabra():
