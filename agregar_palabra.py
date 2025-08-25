@@ -30,6 +30,22 @@ def verPalabras():
 #-----------------------------------------------------------------------------------------------------------------
 #funcion para eliminar las palabras en base al ID
 def eliminarPalabras():
+    ventanaEli=Toplevel(app)#a una variable se le asigna un topLevel en la ventana principal app
+    ventanaEli.title("Eliminar Palabra")#titulo
+    etiqueta=Label(ventanaEli, text='ID a eliminar')
+    etiqueta.pack()
+    etiqueta1=Label(app, text="ID a eliminar: ")
+    etiqueta1.grid(row=0, column=0)
+    idEliminar=Entry(app)#entry para que el usuario ingrese un numero para la palabra que queire eliminar
+    idEliminar.grid(row=0, column=1)
+    #-------------------------------------------
+    valorEliminarPalabra = int(idEliminar.get())#varible para el valor del Id ingresado
+    #hacer un Delete en la base de datos luego de obtener el ID del usuario
+    cr.execute('''
+        DELETE FROM palabras 
+        WHERE id =?''', (valorEliminarPalabra,))
+    baseDeDatos.commit()
+    messagebox.showinfo("Eliminacion exitosa", "La palabra fue eliminada con exito")
 
 #---------------------------------------------
 # funcion para agregar la palabra
@@ -44,6 +60,7 @@ def agregarPalabra():
         INSERT INTO palabras (palabra, descripcion)
         VALUES (?,?)''', (nuevaPalabra, nuevaDescripcion))
     baseDeDatos.commit()
+    messagebox.showinfo("Accion exitosa", "La palabra fue agregada con exito")
 #---------------------------------
 baseDeDatos=connect("palabras.db")
 #se crea el cursor
@@ -72,6 +89,7 @@ etiqueta3=Label(app, text='Ingrese la descripcion: ', fg='blue', font=(20))
 etiqueta3.grid(row=2, column=0, sticky='wens', columnspan=2)
 descripcion=Text(app, height=5, width=30)
 descripcion.grid(row=2, column=2, sticky='wens', columnspan=3, pady=5, padx=3)
+#E
 #------------------------------------------------
 #varibles para almacenar las palabras y la descripcion
 resultado=Label(app, text="La palabra es: ")
@@ -86,5 +104,7 @@ resul.grid(row=5, column=0)
 #boton para ver las palabras
 ver=Button(app, text="Ver Palabras", command=verPalabras)
 ver.grid(row=5, column=1)
-
+#Boton para eliminar una palabra
+eliminar=Button(app, text="Eliminar palabra", command=eliminarPalabras)
+eliminar.grid(row=5, column=2)
 app.mainloop()
