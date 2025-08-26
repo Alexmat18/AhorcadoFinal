@@ -6,11 +6,13 @@ from random import *
 numero = randint(1, 7)
 
 def jugar():
-        if valor1 == palabra:
-            messagebox.showinfo("felicidades ganaste", f"la palabra es: {palabra}")
-
-        else:
-            messagebox.showinfo("Lastima perdiste", f"la palabra es: {palabra}")
+    valor1 = caja.get()
+    print(valor1)
+    if valor1 == dato:
+            messagebox.showinfo("felicidades ganaste", f"la palabra es: {dato}")
+    else:
+            messagebox.showinfo("Lastima perdiste", f"la palabra es: {dato}")
+            print(valor1)
 
 base_de_datos = connect("palabras.db")
 cr = base_de_datos.cursor()
@@ -34,10 +36,13 @@ texto.grid(row=2, column=0, padx=5, pady=5)
 
 cr.execute('''SELECT palabra FROM palabras WHERE id = ?''', (numero,))
 palabra = cr.fetchall()
+dato = palabra[0][0]
+print(dato)
 
-valor1 = caja.get()
 
-for i in range(0, 3):
-    jugar()
+btn = Button(app, text="Jugar", command=jugar)
+btn.grid(row=4, column=0, padx=5, pady=5)
+
+
 
 app.mainloop()
