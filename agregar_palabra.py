@@ -105,7 +105,7 @@ resul.grid(row=5, column=0)
 #boton para ver las palabras
 ver=Button(app, text="Ver Palabras", command=verPalabras)
 ver.grid(row=5, column=1)
-#Boton para eliminar una palabra
+#Boton para abrir la ventana de eliminar una palabra
 eliminar=Button(app, text="Eliminar palabra", command=eliminarPalabras)
 eliminar.grid(row=5, column=2)
 app.mainloop()
