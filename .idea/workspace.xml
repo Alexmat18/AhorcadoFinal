@@ -36,6 +36,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.Interfaz_principal.executor": "Run",
     "Python.agregar_palabra.executor": "Run",
+    "Python.marcosTkinter.executor": "Run",
     "Python.topLevel.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
