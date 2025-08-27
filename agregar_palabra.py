@@ -3,8 +3,14 @@ from tkinter import messagebox
 from tkinter import *
 from tkinter import ttk #libreria para trabajar con tablas
 #----------------------------------------------
+#funcion para cerrar la ventana principal
+def cerrarVentanaPrincipal():
+    app.destroy()
 #funcion para ver las palabras de la base de datos
 def verPalabras():
+    #funcion para hacer que la ventana se cierrre
+    def cerrarVentana():
+        ventanaTabla.destroy()
     # Crear ventana emergente
     ventanaTabla = Toplevel(app)
     ventanaTabla.title("Palabras registradas")
@@ -12,10 +18,15 @@ def verPalabras():
 
     # Crear tabla Treeview
     tabla = ttk.Treeview(ventanaTabla, columns=("ID","Palabra", "Descripcion"), show="headings")
+    tabla.column("ID", width=20, anchor="center")
     tabla.heading("ID", text="ID")
     tabla.heading("Palabra", text="Palabra")
     tabla.heading("Descripcion", text="Descripción")
-    tabla.pack(fill="both", expand=True)
+
+    tabla.grid(row=0, column=0, columnspan=3)
+    #boton para cerrar la ventana
+    botonCerrar = Button(ventanaTabla, text="Cerrar", command=cerrarVentana)
+    botonCerrar.grid(row=1, column=0, padx=10,pady=10)
 
 
     # Llenar la tabla con datos
@@ -23,11 +34,13 @@ def verPalabras():
     palabras = cr.fetchall()
     for palabra in palabras:
         tabla.insert("", "end", values=palabra)
+ 
+
 #-----------------------------------------------------------------------------------------------------------------
 #funcion para eliminar las palabras en base al ID, se crea una ventana emergente para mejor estetica
 def eliminarPalabras():#funcion para realizar la funcion de eliminar palabras
     def eliminar():#funcion para eliminar la palabra
-        id_palabra = entry_id.get()
+        id_palabra = IdEliminado.get() #se guarda el numero ingresado por el usuario
         cr.execute('DELETE FROM palabras WHERE id = ?', (id_palabra,))#se elimina la palabra en base al ID
         baseDeDatos.commit()#GUARDA LOS Cambios en la base de datos
         messagebox.showinfo("Accion exitosa", f"La palabra con ID {id_palabra} fue eliminada con exito")#muestra un mensaje una vez se eliminó la palabra
@@ -108,4 +121,7 @@ ver.grid(row=5, column=1)
 #Boton para abrir la ventana de eliminar una palabra
 eliminar=Button(app, text="Eliminar palabra", command=eliminarPalabras)
 eliminar.grid(row=5, column=2)
+#Boton para cerrar la ventana principal
+cerrarP=Button(app, text='Cerrar', command=cerrarVentanaPrincipal)
+cerrarP.grid(row=5, column=3)
 app.mainloop()
