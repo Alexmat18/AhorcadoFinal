@@ -2,51 +2,97 @@ from tkinter import *
 from sqlite3 import *
 from tkinter import messagebox
 from random import *
+import turtle
+
+# --- INICIALIZAR TURTLE ---
+t = turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+turtle.title("Muñeco Ahorcado")
+turtle.bgcolor("white")
+
+def dibujar_horca():
+    t.penup()
+    t.goto(-100, -100)
+    t.pendown()
+    t.forward(200)
+    t.backward(100)
+    t.left(90)
+    t.forward(300)
+    t.right(90)
+    t.forward(100)
+    t.right(90)
+    t.forward(50)
+
+def dibujar_cabeza():
+    t.penup()
+    t.goto(100, 115)
+    t.setheading(0)
+    t.pendown()
+    t.circle(20)
+
+def cuerpo():
+    t.penup()
+    t.goto(100,100)
+    t.setheading(-100)
+    t.pendown()
+    t.forward(100)
 
 
-# Conectar a la base de datos
+
+def dibujar_parte(fallos):
+    if fallos == 1:
+        dibujar_cabeza()
+    elif fallos == 2:
+        cuerpo()
+
+
+# --- BASE DE DATOS ---
 base_de_datos = connect("palabras.db")
 cr = base_de_datos.cursor()
 
-
-# Crear ventana principal
+# --- INTERFAZ PRINCIPAL TKINTER ---
 app = Tk()
 app.title("AHORCADO")
 app.resizable(width=False, height=False)
 
 # Variables globales
 intentos = 3
+fallos = 0
 palabra = ""
 descripcion = ""
 
-# Widgets (se actualizan después)
+# Widgets
 caja = Entry(app)
 descripcion_label = Label(app, text="")
 btn_jugar = Button(app, text="Jugar", command=None)
 btn_reiniciar = Button(app, text="Jugar de nuevo", command=None)
 
+# --- FUNCIONES DEL JUEGO ---
 
 def nueva_partida():
-    global intentos, palabra, descripcion
+    global intentos, fallos, palabra, descripcion
 
-    # Restablecer intentos
     intentos = 3
+    fallos = 0
 
-    # Elegir nueva palabra
+    # Elegir palabra aleatoria
     numero = randint(1, 7)
-    cr.execute('SELECT descripcion FROM palabras WHERE id = ?', (numero,))
-    descripcion = cr.fetchone()[0]
+    cr.execute('SELECT palabra, descripcion FROM palabras WHERE id = ?', (numero,))
+    resultado = cr.fetchone()
+    palabra = resultado[0]
+    descripcion = resultado[1]
 
-    cr.execute('SELECT palabra FROM palabras WHERE id = ?', (numero,))
-    palabra = cr.fetchone()[0]
-
-    # Actualizar UI
+    # Limpiar GUI
     caja.delete(0, END)
     descripcion_label.config(text=descripcion)
 
+    # Limpiar dibujo
+    t.clear()
+    dibujar_horca()
 
 def jugar():
-    global intentos
+    global intentos, fallos
 
     entrada = caja.get().strip()
 
@@ -57,6 +103,9 @@ def jugar():
         messagebox.showinfo("¡Ganaste!", f"Felicidades, la palabra era: {palabra}")
     else:
         intentos -= 1
+        fallos += 1
+        dibujar_parte(fallos)
+
         if intentos > 0:
             messagebox.showinfo("Incorrecto", f"Palabra incorrecta. Te quedan {intentos} intentos.")
             caja.delete(0, END)
@@ -64,8 +113,7 @@ def jugar():
             messagebox.showerror("¡Perdiste!", f"Se acabaron los intentos. La palabra era: {palabra}")
             caja.delete(0, END)
 
-
-# Posicionar widgets
+# --- GUI TKINTER ---
 Label(app, text="Ingresa la palabra:").grid(row=0, column=0, padx=5, pady=5)
 caja.grid(row=1, column=0, padx=5, pady=5)
 
@@ -81,6 +129,4 @@ btn_reiniciar.grid(row=5, column=0, padx=5, pady=10)
 # Iniciar primera partida
 nueva_partida()
 
-# Ejecutar aplicación
 app.mainloop()
-
