@@ -61,6 +61,7 @@ def piernas():
     t.setheading(-35)
     t.pendown()
     t.forward(50)
+
 def dibujar_parte(fallos):
     if fallos == 1:
         dibujar_cabeza()
@@ -92,12 +93,17 @@ def nueva_partida():
     intentos = 3
     fallos = 0
 
-    numero = randint(1, 7)
-    cr.execute('''SELECT palabra, descripcion FROM palabras WHERE id = ?''', (numero,))
+    cr.execute('''SELECT MAX(id) FROM palabras ''')
+    resultado = cr.fetchone()[0]
+    numero = randint(1,resultado)
 
+    cr.execute('''SELECT palabra, descripcion FROM palabras WHERE id = ?''', (numero,))
     resultado = cr.fetchone()
     palabra = resultado[0]
     descripcion = resultado[1]
+
+    while (palabra == "" and descripcion == ""):
+        numero = randint(1,resultado)
 
     caja.delete(0, END)
     descripcion_label.config(text=descripcion)
