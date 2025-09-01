@@ -1,5 +1,8 @@
 from customtkinter import *
 from agregar_palabra import *
+from agregar_palabra import principal
+
+
 #funcion para cerrar la ventana principal
 def salir():
     app.destroy()
