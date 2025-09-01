@@ -49,11 +49,25 @@ def cuerpo():
     t.pendown()
     t.forward(50)
 
+def piernas():
+    t.penup()
+    t.goto(90,10)
+    t.setheading(-135)
+    t.pendown()
+    t.forward(50)
+
+    t.penup()
+    t.goto(110, 10)
+    t.setheading(-35)
+    t.pendown()
+    t.forward(50)
 def dibujar_parte(fallos):
     if fallos == 1:
         dibujar_cabeza()
     elif fallos == 2:
         cuerpo()
+    elif fallos == 3:
+        piernas()
 
 base_de_datos = connect("palabras.db")
 cr = base_de_datos.cursor()
