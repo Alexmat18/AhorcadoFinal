@@ -19,7 +19,6 @@ def jugar():
                 valor1 = caja.get()
                 caja.delete(0,END)
 
-
 print(estado)
 print(i)
 base_de_datos = connect("palabras.db")
@@ -31,7 +30,6 @@ app.resizable(width=False,height=False)
 
 caja = Entry(app)
 caja.grid(row=0, column=0, padx=5, pady=5)
-
 
 cr.execute('''SELECT descripcion FROM palabras WHERE id = ? ''', (numero,))
 descripcion =  cr.fetchall()
