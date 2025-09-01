@@ -2,54 +2,138 @@ from tkinter import *
 from sqlite3 import *
 from tkinter import messagebox
 from random import *
+import turtle
 
-numero = randint(1, 7)
-i = 3
-estado = True
-def jugar():
+# --- INICIALIZAR TURTLE ---
+t = turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+turtle.title("Muñeco Ahorcado")
+turtle.bgcolor("white")
 
-        valor1 = caja.get()
-        print(valor1)
-        if valor1 == dato:
-                messagebox.showinfo("felicidades ganaste", f"la palabra es: {dato}")
-        else:
-                estado = False
-        if estado == False:
-                messagebox.showinfo("ops", f"te quedan {i-1} intentos")
-                valor1 = caja.get()
-                caja.delete(0,END)
+def dibujar_horca():
+    t.penup()
+    t.goto(-100, -100)
+    t.pendown()
+    t.forward(200)
+    t.backward(100)
+    t.left(90)
+    t.forward(300)
+    t.right(90)
+    t.forward(100)
+    t.right(90)
+    t.forward(50)
 
-print(estado)
-print(i)
+def dibujar_cabeza():
+    t.penup()
+    t.goto(100, 115)
+    t.setheading(0)
+    t.pendown()
+    t.circle(20)
+
+def cuerpo():
+    t.penup()
+    t.goto(100,100)
+    t.setheading(-100)
+    t.pendown()
+    t.forward(100)
+
+
+
+
+def dibujar_parte(fallos):
+    if fallos == 1:
+        dibujar_cabeza()
+    elif fallos == 2:
+        cuerpo()
+
+
+# --- BASE DE DATOS ---
+>>>>>>> d4530669ff29caa19119e25194f6690355cf6ba8
 base_de_datos = connect("palabras.db")
 cr = base_de_datos.cursor()
 
+# --- INTERFAZ PRINCIPAL TKINTER ---
 app = Tk()
 app.title("AHORCADO")
-app.resizable(width=False,height=False)
+app.resizable(width=False, height=False)
 
+# Variables globales
+intentos = 3
+fallos = 0
+palabra = ""
+descripcion = ""
+
+# Widgets
 caja = Entry(app)
-caja.grid(row=0, column=0, padx=5, pady=5)
+descripcion_label = Label(app, text="")
+btn_jugar = Button(app, text="Jugar", command=None)
+btn_reiniciar = Button(app, text="Jugar de nuevo", command=None)
 
+<<<<<<< HEAD
 cr.execute('''SELECT descripcion FROM palabras WHERE id = ? ''', (numero,))
 descripcion =  cr.fetchall()
+=======
+# --- FUNCIONES DEL JUEGO ---
 
-etiqueta = Label(app, text="Descripcion")
-etiqueta.grid(row=1, column=0, padx=5, pady=5)
+def nueva_partida():
+    global intentos, fallos, palabra, descripcion
+>>>>>>> d4530669ff29caa19119e25194f6690355cf6ba8
 
-texto = Label(app, text=f"{descripcion}")
-texto.grid(row=2, column=0, padx=5, pady=5)
+    intentos = 3
+    fallos = 0
 
+    # Elegir palabra aleatoria
+    numero = randint(1, 7)
+    cr.execute('SELECT palabra, descripcion FROM palabras WHERE id = ?', (numero,))
+    resultado = cr.fetchone()
+    palabra = resultado[0]
+    descripcion = resultado[1]
 
-cr.execute('''SELECT palabra FROM palabras WHERE id = ?''', (numero,))
-palabra = cr.fetchall()
-dato = palabra[0][0]
-print(dato)
+    # Limpiar GUI
+    caja.delete(0, END)
+    descripcion_label.config(text=descripcion)
 
-btn = Button(app, text="Jugar", command=jugar)
-btn.grid(row=4, column=0, padx=5, pady=5)
+    # Limpiar dibujo
+    t.clear()
+    dibujar_horca()
 
+def jugar():
+    global intentos, fallos
 
+    entrada = caja.get().strip()
 
+    if entrada == "":
+        messagebox.showwarning("Entrada vacía", "Por favor, escribe una palabra.")
+        return
+    elif entrada.lower() == palabra.lower():
+        messagebox.showinfo("¡Ganaste!", f"Felicidades, la palabra era: {palabra}")
+    else:
+        intentos -= 1
+        fallos += 1
+        dibujar_parte(fallos)
+
+        if intentos > 0:
+            messagebox.showinfo("Incorrecto", f"Palabra incorrecta. Te quedan {intentos} intentos.")
+            caja.delete(0, END)
+        else:
+            messagebox.showerror("¡Perdiste!", f"Se acabaron los intentos. La palabra era: {palabra}")
+            caja.delete(0, END)
+
+# --- GUI TKINTER ---
+Label(app, text="Ingresa la palabra:").grid(row=0, column=0, padx=5, pady=5)
+caja.grid(row=1, column=0, padx=5, pady=5)
+
+Label(app, text="Descripción:").grid(row=2, column=0, padx=5, pady=5)
+descripcion_label.grid(row=3, column=0, padx=5, pady=5)
+
+btn_jugar.config(command=jugar)
+btn_jugar.grid(row=4, column=0, padx=5, pady=5)
+
+btn_reiniciar.config(command=nueva_partida)
+btn_reiniciar.grid(row=5, column=0, padx=5, pady=10)
+
+# Iniciar primera partida
+nueva_partida()
 
 app.mainloop()
