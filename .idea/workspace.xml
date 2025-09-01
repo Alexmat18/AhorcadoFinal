@@ -31,20 +31,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.Interfaz_principal.executor": "Run",
-    "Python.agregar_palabra.executor": "Run",
-    "Python.marcosTkinter.executor": "Run",
-    "Python.topLevel.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "//coed-server/Vespertina/5to PE 2025/3. Jeferson Alvarado/programacion/Tercera unidad/Git/AhorcadoFinal",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.Interfaz_principal.executor&quot;: &quot;Run&quot;,
+    &quot;Python.agregar_palabra.executor&quot;: &quot;Run&quot;,
+    &quot;Python.marcosTkinter.executor&quot;: &quot;Run&quot;,
+    &quot;Python.topLevel.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;//coed-server/Vespertina/5to PE 2025/3. Jeferson Alvarado/programacion/Tercera unidad/Git/AhorcadoFinal&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Interfaz_principal" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <option name="ENV_FILES" value="" />

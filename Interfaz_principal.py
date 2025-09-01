@@ -1,20 +1,33 @@
-from tkinter import *
+from customtkinter import *
 #funcion para cerrar la ventana principal
 def salir():
     app.destroy()
 
-app=Tk()
+app=CTk()
 app.title("INTERFAZ PRINCIPAL")
+fuente=CTkFont(family="Arial", size=30, weight="bold")
+fuente2=CTkFont(family="Arial", size=25, weight="bold")
 
 #creacion de  los marcos
-marco1=Frame(app,bg='lightYellow', width=100, height=100)
-marco2=Frame(app,bg='lightpink', width=100, height=10)
-marco1.grid(row=0, column=0, columnspan=3)
-marco1.grid(row=1, column=0, columnspan=3)
+marco3=CTkFrame(app,bg_color='lightYellow', width=100, height=100)
+marco1=CTkFrame(app,bg_color='lightYellow', width=100, height=100)
+marco2=CTkFrame(app,bg_color='white', width=100, height=10)
+marco1.grid(row=0, column=0, columnspan=3, sticky="news")
+marco2.grid(row=1, column=0, columnspan=3)
+marco3.grid(row=2, column=0, columnspan=3,sticky="news")
+#texto de bievenida
+etiquetaBienve=CTkLabel(marco1, text="Bienvenido al menú principal", font=fuente)
+etiquetaBienve1=CTkLabel(marco1, text="Presione un boton para elegir lo que quiere hacer",font=fuente2)
+etiquetaBienve.grid(row=0, column=0, columnspan=3)
+etiquetaBienve1.grid(row=1, column=0, columnspan=3)
+#-----------------------------------------------------
+#etiqueta par el marco 3
+etiqueta4=CTkLabel(marco3, text="Jugar es la forma más divertida que tiene nuestro cerebro de aprender", font=fuente2)
+etiqueta4.grid(row=0, column=0, columnspan=1, rowspan=3)
 #creacion de los botones para realizar acciones
-botonJugar=Button(marco1, text="Jugar")
-botonAcciones=Button(marco1, text="Acciones")
-botonSalir=Button(marco1, text="Salir", command=salir)
+botonJugar=CTkButton(marco2, text="Jugar")
+botonAcciones=CTkButton(marco2, text="Acciones")
+botonSalir=CTkButton(marco2, text="Salir", command=salir)
 #invocar los botones
 botonSalir.grid(row=0, column=0, pady=5, padx=5)
 botonJugar.grid(row=0, column=1, pady=5, padx=5)
