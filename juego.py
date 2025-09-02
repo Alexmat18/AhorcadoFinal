@@ -4,7 +4,8 @@ from tkinter import messagebox
 from random import *
 import turtle
 
-def FunPrincipal():
+def FUNCIONP():
+
     t = turtle.Turtle()
     t.speed(0)
     t.hideturtle()
@@ -38,17 +39,19 @@ def FunPrincipal():
         t.pendown()
         t.forward(100)
 
+    def manoizquierda():
         t.penup()
         t.goto(90,90)
         t.setheading(-135)
         t.pendown()
         t.forward(50)
-
+    def manoderecha():
         t.penup()
         t.goto(110, 90)
         t.setheading(-35)
         t.pendown()
         t.forward(50)
+
 
     def piernas():
         t.penup()
@@ -74,6 +77,22 @@ def FunPrincipal():
     base_de_datos = connect("palabras.db")
     cr = base_de_datos.cursor()
 
+
+    def dibujar_parte(fallos):
+        if fallos == 1:
+            dibujar_cabeza()
+        elif fallos == 2:
+            cuerpo()
+        elif fallos == 3:
+            manoizquierda()
+        elif fallos == 4:
+            manoderecha()
+        elif fallos == 5:
+            piernas()
+
+    base_de_datos = connect("palabras.db")
+    cr = base_de_datos.cursor()
+
     app = Tk()
     app.title("AHORCADO")
     app.resizable(width=False, height=False)
@@ -91,12 +110,23 @@ def FunPrincipal():
     def nueva_partida():
         global intentos, fallos, palabra, descripcion
 
-        intentos = 3
-        fallos = 0
+
 
         cr.execute('''SELECT MAX(id) FROM palabras ''')
         resultado = cr.fetchone()[0]
         numero = randint(1,resultado)
+
+        cr.execute('''SELECT palabra, descripcion FROM palabras WHERE id = ?''', (numero,))
+        resultado = cr.fetchone()
+        palabra = resultado[0]
+        descripcion = resultado[1]
+
+        intentos = 5
+        fallos = 0
+
+        cr.execute('''SELECT MAX(id) FROM palabras ''')
+        resultados = cr.fetchone()[0]
+        numero = randint(1,resultados)
 
         cr.execute('''SELECT palabra, descripcion FROM palabras WHERE id = ?''', (numero,))
         resultado = cr.fetchone()
@@ -114,6 +144,7 @@ def FunPrincipal():
 
     def jugar():
         global intentos, fallos
+
 
         entrada = caja.get().strip()
 
@@ -147,4 +178,7 @@ def FunPrincipal():
     btn_reiniciar.grid(row=5, column=0, padx=5, pady=10)
 
 
+    nueva_partida()
+
     app.mainloop()
+
