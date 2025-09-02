@@ -1,7 +1,8 @@
 from customtkinter import *
+from tkinter import *
 from agregar_palabra import *
 from agregar_palabra import principal
-
+from juego import *
 
 #funcion para cerrar la ventana principal
 def salir():
@@ -29,7 +30,7 @@ etiquetaBienve1.grid(row=1, column=0, columnspan=3)
 etiqueta4=CTkLabel(marco3, text="Jugar es la forma más divertida que tiene nuestro cerebro de aprender", font=fuente2)
 etiqueta4.grid(row=0, column=0, columnspan=1, rowspan=3)
 #creacion de los botones para realizar acciones
-botonJugar=CTkButton(marco2, text="Jugar")
+botonJugar=CTkButton(marco2, text="Jugar", command=FunPrincipal)
 botonAcciones=CTkButton(marco2, text="Acciones", command=principal)
 botonSalir=CTkButton(marco2, text="Salir", command=salir)
 #invocar los botones
