@@ -95,6 +95,7 @@ def FUNCIONP():
     descripcion_label = Label(app, text="", wraplength=300, justify=LEFT)
     btn_jugar = Button(app, text="Jugar", command=None)
     btn_reiniciar = Button(app, text="Jugar de nuevo", command=None)
+    btn_salir = Button(app, text="Salir", command=None)
 
     def nueva_partida():
         global intentos, fallos, palabra, descripcion
@@ -144,6 +145,10 @@ def FUNCIONP():
             else:
                 messagebox.showerror("¡Perdiste!", f"Se acabaron los intentos. La palabra era: {palabra}")
                 caja.delete(0, END)
+    def salir():
+        app.destroy()
+        turtle.Screen()
+        turtle.bye()
 
     Label(app, text="Ingresa la palabra:").grid(row=0, column=0, padx=5, pady=5)
     caja.grid(row=1, column=0, padx=5, pady=5)
@@ -156,6 +161,8 @@ def FUNCIONP():
 
     btn_reiniciar.config(command=nueva_partida)
     btn_reiniciar.grid(row=5, column=0, padx=5, pady=10)
+    btn_salir.config(command=salir)
+    btn_salir.grid(row=6, column=0, padx=5, pady=10)
 
     nueva_partida()
 
