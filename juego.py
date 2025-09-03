@@ -12,17 +12,21 @@ def FUNCIONP():
     turtle.bgcolor("white")
 
     def dibujar_horca():
+        t.clear()
         t.penup()
-        t.goto(-100, -100)
+        t.home()  # Regresa al centro (0, 0)
+        t.setheading(0)  # Asegura orientación hacia la derecha
+        t.goto(-100, -100)  # Punto inicial
         t.pendown()
-        t.forward(200)
+
+        t.forward(200)  # Base
         t.backward(100)
         t.left(90)
-        t.forward(300)
+        t.forward(300)  # Poste
         t.right(90)
-        t.forward(100)
+        t.forward(100)  # Techo
         t.right(90)
-        t.forward(50)
+        t.forward(50)  # Cuerda
 
     def dibujar_cabeza():
         t.penup()
@@ -88,7 +92,7 @@ def FUNCIONP():
     descripcion = ""
 
     caja = Entry(app)
-    descripcion_label = Label(app, text="")
+    descripcion_label = Label(app, text="", wraplength=300, justify=LEFT)
     btn_jugar = Button(app, text="Jugar", command=None)
     btn_reiniciar = Button(app, text="Jugar de nuevo", command=None)
 
@@ -114,10 +118,13 @@ def FUNCIONP():
         descripcion_label.config(text=descripcion)
 
         t.clear()
+        t.penup()
+        t.home()
+        t.setheading(0)
         dibujar_horca()
 
     def jugar():
-        global intentos, fallos
+        global intentos, fallos,palabra
 
         entrada = caja.get().strip()
 
