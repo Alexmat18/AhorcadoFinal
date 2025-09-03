@@ -75,13 +75,14 @@ def principal():
     # funcion para agregar la palabra
     def agregarPalabra():
         # validacion de los campos
-        if nombrePalabra.get() == "" or descripcion.get("1.0", "end") == "\n":
+        if nombrePalabra.get() == "" or descripcion.get() == "\n":
             messagebox.showwarning("Advertencia", "Por favor, complete todos los campos.")
+
             return
         else:
             # se almacena el valor de las varibles en las cajas
             nuevaPalabra = str(nombrePalabra.get())
-            nuevaDescripcion = descripcion.get("1.0", "end")
+            nuevaDescripcion = descripcion.get()
             # se reconfigura la etiqueta de cada caja
             resultad2.configure(text=f"La palabra es {nuevaPalabra}")
             resultado.configure(text=f"Descripcion: {nuevaDescripcion}")
@@ -90,6 +91,8 @@ def principal():
                 VALUES (?,?)''', (nuevaPalabra, nuevaDescripcion))
             baseDeDatos.commit()
             messagebox.showinfo("Accion exitosa", "La palabra fue agregada con exito")
+            nombrePalabra.delete(0, END)
+            descripcion.delete(0, END)
 
     # ---------------------------------
     #---------------------------------------------
@@ -111,7 +114,7 @@ def principal():
     #etiqueta para la descripcion
     etiqueta3=Label(app, text='Ingrese la descripcion: ', fg='blue', font=(20))
     etiqueta3.grid(row=2, column=0, sticky='wens', columnspan=2)
-    descripcion=Text(app, height=5, width=30)
+    descripcion=Entry(app, width=30)
     descripcion.grid(row=2, column=2, sticky='wens', columnspan=3, pady=5, padx=3)
     #E
     #------------------------------------------------
